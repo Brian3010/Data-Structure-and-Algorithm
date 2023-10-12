@@ -1,26 +1,30 @@
 #include <iostream>
 using namespace std;
 
-class Cookie {
- private:
+class Cookie
+{
+private:
   string color;
 
- public:
-  Cookie(string color) {
+public:
+  Cookie(string color)
+  {
     this->color = color;
   }
 
   string getColor() { return color; }
 
-  void setColor(string newColor) {
+  void setColor(string newColor)
+  {
     this->color = newColor;
   }
 };
 
-int main() {
+int main()
+{
   // create Cookie instance
-  Cookie* cookieOne = new Cookie("green");
-  Cookie* cookieTwo = new Cookie("blue");
+  Cookie *cookieOne = new Cookie("green");
+  Cookie *cookieTwo = new Cookie("blue");
 
   cookieTwo->setColor("Yellow");
 
