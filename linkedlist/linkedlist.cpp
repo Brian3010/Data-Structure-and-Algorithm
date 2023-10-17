@@ -1,26 +1,207 @@
 #include <iostream>
 using namespace std;
 
-// create a node (4)-->nullptr
 class Node
 {
-private:
+public:
     int value;
     Node *next;
-
-public:
     Node(int value)
     {
         this->value = value;
         next = nullptr;
     }
-}
+};
 
-// create a LinkedList head-tail --> (value)-->nullptr
 class LinkedList
 {
 private:
     Node *head;
-    tail *tail;
-    int length = 1;
+    Node *tail;
+    int length;
+
+public:
+    LinkedList(int value)
+    {
+        Node *newNode = new Node(value);
+        head = newNode;
+        tail = newNode;
+        this->length = 1;
+    }
+
+    ~LinkedList()
+    {
+        Node *temp = head;
+        while (head)
+        {
+            head = head->next;
+            delete temp;
+            temp = head;
+        }
+    }
+
+    void printList()
+    {
+        Node *temp = head;
+
+        if (temp)
+        {
+            cout << temp->value;
+            temp = temp->next;
+        }
+        while (temp)
+        {
+            cout << " - " << temp->value;
+            temp = temp->next;
+        }
+    }
+
+    void getHead()
+    {
+        cout << "Head: " << head->value << endl;
+    }
+
+    void getTail()
+    {
+        cout << "Tail: " << tail->value << endl;
+    }
+
+    void getLength()
+    {
+        cout << "Length: " << this->length << endl;
+    }
+
+    void append(int value)
+    {
+        // create a new node
+        Node *newNode = new Node(value);
+
+        // append a new node if the linkedlist empty
+        if (tail == nullptr && head == nullptr)
+        {
+            head = newNode;
+            tail = newNode;
+            this->length = 1;
+        }
+
+        // append a new Node to the list if not empty
+        tail->next = newNode;
+        tail = newNode;
+        this->length += 1;
+    }
+
+    void deleteLast()
+    {
+        // if linkedlist is empty
+        if (this->length == 0)
+            return;
+
+        Node *pre, *temp;
+        // point pre, temp to head
+        pre = head;
+        temp = head;
+
+        // if only 1 node left in the list
+        if (this->length == 1)
+        {
+            head = nullptr;
+            tail = nullptr;
+        }
+        else
+        {
+            // check temp->next != nullptr
+            while (temp->next)
+            {
+                pre = temp; // set temp to the previous node from the last node
+                temp = temp->next;
+            }
+            tail = pre; // point pre to tail;
+            tail->next = nullptr;
+        }
+        this->length--;
+        delete temp;
+    }
+
+    void prepend(int value)
+    {
+        Node *newNode = new Node(value);
+
+        // if list empty
+        if (this->length == 0)
+        {
+            head = newNode;
+            tail = newNode;
+        }
+
+        // there're nodes in the list
+        newNode->next = head;
+        head = newNode;
+        this->length++;
+    }
+
+    void deleteFist()
+    {
+        // if there list empty
+        if (this->length == 0)
+            return;
+
+        // if 1 node in the list
+        if (this->length == 1)
+        {
+            head = nullptr;
+            tail = nullptr;
+        }
+
+        // there're nodes in the list
+        Node *temp = head; // point temp to head
+
+        // move head to next node
+        head = head->next;
+        this->length--;
+        delete temp; // delete temp
+    }
+};
+
+int main()
+{
+    LinkedList *myLinkedList = new LinkedList(4);
+
+    // append new node
+    myLinkedList->append(22);
+    myLinkedList->append(1);
+    myLinkedList->append(34);
+    myLinkedList->append(52);
+
+    myLinkedList->getHead();
+    myLinkedList->getTail();
+    myLinkedList->getLength();
+
+    myLinkedList->printList();
+
+    // delete last node
+    cout << endl;
+    myLinkedList->deleteLast();
+    myLinkedList->deleteLast();
+    // myLinkedList->deleteLast();
+    // myLinkedList->deleteLast();
+    cout << "\nafter deleleLast(): ";
+    myLinkedList->getLength();
+    myLinkedList->printList();
+
+    // prepend a node
+    cout << endl;
+    myLinkedList->prepend(5);
+    myLinkedList->prepend(6);
+    cout << "after prepend: ";
+    myLinkedList->getLength();
+    myLinkedList->printList();
+
+    // delete fist node
+    cout << endl;
+    myLinkedList->deleteFist();
+    cout << "after deteteFist: ";
+    myLinkedList->getLength();
+    myLinkedList->printList();
+
+    delete myLinkedList;
 }
