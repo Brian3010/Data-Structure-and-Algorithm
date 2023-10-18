@@ -160,6 +160,47 @@ public:
         this->length--;
         delete temp; // delete temp
     }
+
+    Node *get(int index)
+    {
+        // if index is out of range
+        if (index >= this->length || index < 0)
+        {
+            return nullptr;
+        }
+
+        // (4)->(2)->(22)->nullptr;
+        // 0->1->2->nullptr - length = 3
+
+        Node *temp = head;
+
+        for (int i = 0; i < index; i++)
+        {
+            temp = temp->next; // move temp to next node if index fulfilled
+        }
+
+        // int i = 0;
+        // while (i < index)
+        // {
+        //     temp = temp->next;
+        //     i++;
+        // }
+
+        return temp;
+    }
+
+    bool set(int index, int value)
+    {
+        // get value from index
+        Node *temp = get(index);
+        // if nullptr returned
+        if (!temp)
+            return false;
+
+        // set value in temp to the new value
+        temp->value = value;
+        return true;
+    }
 };
 
 int main()
@@ -196,10 +237,24 @@ int main()
     myLinkedList->getLength();
     myLinkedList->printList();
 
-    // delete fist node
+    // delete first node
     cout << endl;
     myLinkedList->deleteFist();
     cout << "after deteteFist: ";
+    myLinkedList->getLength();
+    myLinkedList->printList();
+
+    // get value using index;
+    cout << endl;
+    cout << "get index at 2:  " << myLinkedList->get(2)->value << endl;
+    cout << "get index at 0:  " << myLinkedList->get(0)->value << endl;
+    cout << "get index at 1:  " << myLinkedList->get(1)->value << endl;
+    // cout << "get index at 1:  " << myLinkedList->get(4)->value << endl;
+
+    // set value at index
+    cout << endl;
+    cout << "set 40 at index 2:  " << myLinkedList->set(2, 40) << endl;
+    cout << "set 65 at index 1:  " << myLinkedList->set(1, 65) << endl;
     myLinkedList->getLength();
     myLinkedList->printList();
 
