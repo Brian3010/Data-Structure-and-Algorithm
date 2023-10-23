@@ -232,6 +232,25 @@ class LinkedList {
       delete temp;
       return true;
    }
+
+   void reverse() {
+
+      Node *temp = head;
+      head = tail;
+      tail = temp;
+
+      Node *before = nullptr;
+      Node *after = temp->next;
+
+      // 2->14->30->29->40->nullptr
+      for (int i = 0; i < length; i++) {
+         after = temp->next;
+         // null<-2 14->30->29-40->nullptr
+         temp->next = before;
+         before = temp;
+         temp = after;
+      }
+   }
 };
 
 int main() {
@@ -306,6 +325,20 @@ int main() {
    myLinkedList->deleteNode(4);
    myLinkedList->deleteNode(2);
    myLinkedList->getLength();
+   myLinkedList->printList();
+
+   // reverse the linkedlist
+   cout << endl;
+   cout << endl;
+   myLinkedList->append(29);
+   myLinkedList->append(30);
+   myLinkedList->append(98);
+   cout << "reversing the linkedlist" << endl;
+   cout << "before reversing: ";
+   myLinkedList->printList();
+   cout << endl;
+   myLinkedList->reverse();
+   cout << "after reversing: ";
    myLinkedList->printList();
 
    delete myLinkedList;
